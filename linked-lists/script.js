@@ -118,7 +118,7 @@ class LinkedList {
         
         let currentNode = this.headNode;
 
-        for (let i = 0; i <= this.length; i++) {
+        for (let i = 0; i < this.length; i++) {
             if (i === this.length - 1) {
                 output += currentNode.value;
                 output += last;
@@ -138,18 +138,58 @@ class LinkedList {
             return;
         }
 
-        let currentNode = this.headNode;
+        if (index === 0) {
+            let replacedNode = this.headNode;
+            let newNode = new Node(value);
 
+            this.headNode = newNode;
+            newNode.nextNode = replacedNode;
+
+            this.length++;
+            return newNode;
+        }
+
+        let currentNode = this.headNode;
         for (let i = 0; i < index; i++) {
-            console.log(i)
             if (i === index - 1) {
                 let replacedNode = currentNode.nextNode;
-                let newNode = new Node(value)
+                let newNode = new Node(value);
 
                 currentNode.nextNode = newNode;
                 newNode.nextNode = replacedNode;
+
                 this.length++;
                 return newNode;
+            }
+            currentNode = currentNode.nextNode;
+        }
+    }
+
+    removeAt(index) {
+        // Removes node at index
+        if (index < 0 || index >= this.length) {
+            console.log('Index out of range!')
+            return;
+        }
+
+        if (index === 0) {
+            let removedNode = this.headNode;
+            this.headNode = removedNode.nextNode;
+            this.length--;
+            return removedNode;
+        }
+
+        let currentNode = this.headNode;
+
+        for (let i = 0; i < index; i++) {
+            if (i === index - 1) {
+                let removedNode = currentNode.nextNode;
+                currentNode.nextNode = removedNode.nextNode;
+                
+                if (index === this.length - 1) this.tailNode = currentNode;
+
+                this.length--;
+                return removedNode;
             }
             currentNode = currentNode.nextNode;
         }
@@ -163,19 +203,3 @@ class Node {
         this.nextNode = null;
     }
 }
-
-let list = new LinkedList();
-
-list.append(`I'm appended!`);
-list.prepend('hello!');
-list.append(5);
-list.append('hello 2!');
-
-
-console.log(list.toString())
-
-list.insertAt('inserted!', 2)
-console.log(list.toString())
-
-list.insertAt('inserted 2!', 1)
-console.log(list.toString())
