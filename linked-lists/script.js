@@ -22,7 +22,6 @@ class LinkedList {
     prepend(value) {
         // Add new node containing value to the start of the list
         let node = new Node(value);
-
         if (this.headNode === null) {
             this.headNode = node;
             this.tailNode = this.headNode;
@@ -77,10 +76,7 @@ class LinkedList {
         }
 
         for (let i = 0; i <= (this.length - 2); i++) {
-
-            // If we're at the second last node
             if (i === (this.length - 2)) {
-                
                 this.tailNode = currentNode;
                 currentNode.nextNode = null;
                 this.length--;
@@ -134,6 +130,30 @@ class LinkedList {
             currentNode = currentNode.nextNode;
         }
     }
+
+    insertAt(value, index) {
+        // Inserts new node with provided value at index.
+        if (index < 0 || index >= this.length) {
+            console.log('Index out of range!')
+            return;
+        }
+
+        let currentNode = this.headNode;
+
+        for (let i = 0; i < index; i++) {
+            console.log(i)
+            if (i === index - 1) {
+                let replacedNode = currentNode.nextNode;
+                let newNode = new Node(value)
+
+                currentNode.nextNode = newNode;
+                newNode.nextNode = replacedNode;
+                this.length++;
+                return newNode;
+            }
+            currentNode = currentNode.nextNode;
+        }
+    }
 }
 
 // Containing value() function and link to nextNode, with both set as null by default
@@ -149,7 +169,13 @@ let list = new LinkedList();
 list.append(`I'm appended!`);
 list.prepend('hello!');
 list.append(5);
+list.append('hello 2!');
+
 
 console.log(list.toString())
 
-console.log(list.contains(5))
+list.insertAt('inserted!', 2)
+console.log(list.toString())
+
+list.insertAt('inserted 2!', 1)
+console.log(list.toString())
