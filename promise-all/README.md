@@ -1,4 +1,4 @@
-# Search API
+# Practising with `Promise.all()`
 I need to practice processing fetched data from APIs, so I'm using [Poke API](https://pokeapi.co/docs/v2). 
 
 ## Goals
