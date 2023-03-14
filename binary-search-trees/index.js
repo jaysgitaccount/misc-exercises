@@ -41,7 +41,7 @@ class Tree {
 
         while (i < A.length && j < B.length) {
             if (A[i] === B[j]) {
-                // If a duplicate is found, only add 1, increment both
+                // If a duplicate is found, skip 1
                 sorted[k] = A[i];
                 i++;
                 j++;
@@ -65,6 +65,44 @@ class Tree {
         }
 
         return sorted;
+    }
+
+    insert(data, root = this.root) {
+        if (
+            data === root.data ||
+            data === root.right?.data ||
+            data === root.left?.data
+        ) {
+            return console.error(`${data} already exists!`);
+        }
+    
+        if (data > root.data) {
+            if (data > root.right?.data) {
+                return this.insert(data, root.right);
+            }
+    
+            let newNode = new Node(data);
+            let temp = root.right;
+    
+            root.right = newNode;
+    
+            if (temp) newNode.right = temp;
+
+            return newNode;
+        } else if (data < root.data) {
+            if (data < root.left?.data) {
+                return this.insert(data, root.left)
+            }
+
+            let newNode = new Node (data);
+            let temp = root.left;
+
+            root.left = newNode;
+
+            if (temp) newNode.left = temp;
+
+            return newNode;
+        }
     }
 }
 
