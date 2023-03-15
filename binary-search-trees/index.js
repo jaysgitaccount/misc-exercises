@@ -67,17 +67,28 @@ class Tree {
         return sorted;
     }
 
-    insert(data, root = this.root) {
-        // compare data to root.data
-        // if ===, duplicate node: return existing node
-        // if >, go right
-        // if <, go left
-        // if current === null, insert here
+    insert(data) {
+        const insertBound = insertNode.bind(this);
+        this.root = insertBound(data);
+
+        function insertNode(data, root = this.root) {
+            if (root === null) return root = new Node(data);
+            if (data === root.data) return root;
+
+            if (data > root.data) {
+                root.right = insertBound(data, root.right);
+            } else if (data < root.data) {
+                root.left = insertBound(data, root.left);
+            }
+
+            // Return unchanged node
+            return root;
+        }
     }
 
     delete(data) {
         const deleteBound = deleteNode.bind(this);
-        this.root = deleteBound(data, this.root);
+        this.root = deleteBound(data);
 
         function deleteNode(data, root = this.root) {
             if (root === null) return root;
@@ -121,7 +132,4 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
 let array = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324, 40, 55, 88, 77, 121, 574];
 
 let myTree = new Tree(array);
-prettyPrint(myTree.root);
-
-myTree.delete(88);
 prettyPrint(myTree.root);
