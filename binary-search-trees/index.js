@@ -172,6 +172,66 @@ class Tree {
 
         if (!func) return values;
     }
+
+    inorder(func) {
+        const values = [];
+        const traverse = traverseInorder.bind(this);
+
+        traverse(this.root);
+
+        if (!func) return values;
+        function traverseInorder(root) {
+            if (root === null) return;
+
+            traverse(root.left);
+            if (func) {
+                func(root);
+            } else {
+                values.push(root.data)
+            }
+            traverse(root.right);
+        }
+    }
+
+    preorder(func) {
+        const values = [];
+        const traverse = traversePreorder.bind(this);
+
+        traverse(this.root);
+        if (!func) return values;
+
+        function traversePreorder(root) {
+            if (root === null) return;
+
+            if (func) {
+                func(root);
+            } else {
+                values.push(root.data);
+            }
+            traverse(root.left);
+            traverse(root.right);
+        }
+    }
+
+    postorder(func) {
+        const values = [];
+        const traverse = traversePostorder.bind(this);
+
+        traverse(this.root);
+        if (!func) return values;
+
+        function traversePostorder(root) {
+            if (root === null) return;
+
+            traverse(root.left);
+            traverse(root.right);
+            if (func) {
+                func(root);
+            } else {
+                values.push(root.data);
+            }
+        }
+    }
 }
 
 const prettyPrint = (node, prefix = '', isLeft = true) => {
@@ -192,6 +252,8 @@ let array = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324, 40, 55, 88, 77, 12
 
 let myTree = new Tree(array);
 
-myTree.levelOrderItr(logValue);
+myTree.postorder(logValue);
 
-//prettyPrint(myTree.root);
+console.log(myTree.postorder());
+
+prettyPrint(myTree.root);
