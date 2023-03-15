@@ -131,6 +131,47 @@ class Tree {
         console.log(`${data} not found in tree.`)
         return null;
     }
+
+    levelOrderRec(func) {
+        let values = [];
+        const queue = [];
+        let getNextNode = recursive.bind(this);
+
+        getNextNode(this.root);
+
+        if (!func) return values;
+
+        function recursive(root) {
+            if (func) func(root)
+                else values.push(root.data);
+
+            if (root.left) queue.push(root.left)
+            if (root.right) queue.push(root.right)
+
+            // Base case: call next or end chain
+            if (queue.length > 0) getNextNode(queue.shift());
+        }
+    }
+
+    levelOrderItr(func) {
+        let values = [];
+        let queue = [this.root];
+
+        while (queue.length > 0) {
+            let current = queue.shift();
+
+            if (current.left) queue.push(current.left);
+            if (current.right) queue.push(current.right);
+
+            if (func) {
+                func(current);
+            } else {
+                values.push(current.data);
+            }
+        }
+
+        if (!func) return values;
+    }
 }
 
 const prettyPrint = (node, prefix = '', isLeft = true) => {
@@ -143,8 +184,14 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
     }
 }
 
+function logValue(node) {
+    console.log(node.data)
+}
+
 let array = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324, 40, 55, 88, 77, 121, 574];
 
 let myTree = new Tree(array);
 
-prettyPrint(myTree.root);
+myTree.levelOrderItr(logValue);
+
+//prettyPrint(myTree.root);
