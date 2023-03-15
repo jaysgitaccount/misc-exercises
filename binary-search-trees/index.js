@@ -117,6 +117,20 @@ class Tree {
 
         return this.getMinValue(root.left);
     }
+
+    find(data, root = this.root) {
+        while (root != null) {
+            if (data === root.data) return root;
+            if (data > root.data) {
+                root = root.right;
+            } else {
+                root = root.left;
+            }
+        }
+
+        console.log(`${data} not found in tree.`)
+        return null;
+    }
 }
 
 const prettyPrint = (node, prefix = '', isLeft = true) => {
@@ -132,4 +146,5 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
 let array = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324, 40, 55, 88, 77, 121, 574];
 
 let myTree = new Tree(array);
+
 prettyPrint(myTree.root);
