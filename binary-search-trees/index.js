@@ -69,15 +69,15 @@ class Tree {
 
     insert(data, root = this.root) {
         // compare data to root.data
-        // if ===, this is not allowed, return null
+        // if ===, duplicate node: return existing node
         // if >, go right
         // if <, go left
         // if current === null, insert here
     }
 
-    delete(data, root = this.root) {
+    delete(data) {
         const deleteBound = deleteNode.bind(this);
-        this.root = deleteBound(data, root = this.root)
+        this.root = deleteBound(data, this.root);
 
         function deleteNode(data, root = this.root) {
             if (root === null) return root;
