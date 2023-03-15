@@ -68,41 +68,43 @@ class Tree {
     }
 
     insert(data, root = this.root) {
-        if (
-            data === root.data ||
-            data === root.right?.data ||
-            data === root.left?.data
-        ) {
-            return console.error(`${data} already exists!`);
-        }
-    
-        if (data > root.data) {
-            if (data > root.right?.data) {
-                return this.insert(data, root.right);
+        // compare data to root.data
+        // if ===, this is not allowed, return null
+        // if >, go right
+        // if <, go left
+        // if current === null, insert here
+    }
+
+    delete(data, root = this.root) {
+        const deleteBound = deleteNode.bind(this);
+        this.root = deleteBound(data, root = this.root)
+
+        function deleteNode(data, root = this.root) {
+            if (root === null) return root;
+
+            if (data > root.data) {
+                root.right = deleteBound(data, root.right);
+            } else if (data < root.data) {
+                root.left = deleteBound(data, root.left);
+            } else {
+                if (root.left === null || root.right === null) {
+                    return root.left || root.right;
+                } else {
+                    // If two children
+                    root.data = this.getMinValue(root.right).data;
+                    root.right = deleteBound(root.data, root.right);
+                }
             }
-    
-            let newNode = new Node(data);
-            let temp = root.right;
-    
-            root.right = newNode;
-    
-            if (temp) newNode.right = temp;
-
-            return newNode;
-        } else if (data < root.data) {
-            if (data < root.left?.data) {
-                return this.insert(data, root.left)
-            }
-
-            let newNode = new Node (data);
-            let temp = root.left;
-
-            root.left = newNode;
-
-            if (temp) newNode.left = temp;
-
-            return newNode;
+            return root;
         }
+    }
+
+    getMinValue(root = this.root) {
+        // Get the smallest value in a subtree
+        if (root === null) return;
+        if (root.left === null) return root;
+
+        return this.getMinValue(root.left);
     }
 }
 
@@ -116,8 +118,10 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
     }
 }
 
-let array = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
+let array = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324, 40, 55, 88, 77, 121, 574];
 
 let myTree = new Tree(array);
+prettyPrint(myTree.root);
 
+myTree.delete(88);
 prettyPrint(myTree.root);
