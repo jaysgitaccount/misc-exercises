@@ -232,6 +232,16 @@ class Tree {
             }
         }
     }
+
+    height(root = this.root) {
+        if (!root) return 0;
+
+        return 1 + Math.max(
+            this.height(root.right),
+            this.height(root.left)
+        );
+    }
+
 }
 
 const prettyPrint = (node, prefix = '', isLeft = true) => {
@@ -248,12 +258,10 @@ function logValue(node) {
     console.log(node.data)
 }
 
-let array = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324, 40, 55, 88, 77, 121, 574];
+let array = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324, 40, 55, 88, 77, 121, 574, 86, 165, 123, 744, 753];
 
 let myTree = new Tree(array);
 
-myTree.postorder(logValue);
-
-console.log(myTree.postorder());
+console.log(myTree.height());
 
 prettyPrint(myTree.root);
