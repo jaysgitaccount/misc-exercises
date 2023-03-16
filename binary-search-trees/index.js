@@ -6,6 +6,9 @@ class Node {
     }
 }
 
+/**
+ * Takes an unsorted array and constructs a balanced binary search tree at Tree.root
+ */
 class Tree {
     constructor(array) {
         this.root = this.buildTree(array);
@@ -102,7 +105,7 @@ class Tree {
                     return root.left || root.right;
                 } else {
                     // If two children
-                    root.data = this.getMinValue(root.right).data;
+                    root.data = this.getMinNode(root.right).data;
                     root.right = deleteBound(root.data, root.right);
                 }
             }
@@ -110,12 +113,12 @@ class Tree {
         }
     }
 
-    getMinValue(root = this.root) {
-        // Get the smallest value in a subtree
+    getMinNode(root = this.root) {
+        // Get the smallest value node in a subtree
         if (root === null) return;
         if (root.left === null) return root;
 
-        return this.getMinValue(root.left);
+        return this.getMinNode(root.left);
     }
 
     find(data, root = this.root) {
@@ -278,7 +281,6 @@ class Tree {
             }
         }
 
-        // If not found, the while loop exits
         console.log(`${data} not found.`)
         return null;
     }
@@ -289,6 +291,11 @@ class Tree {
 
         if (Math.abs(leftHeight - rightHeight) <= 1) return true;
         return false;
+    }
+
+    rebalance() {
+        let values = this.inorder();
+        this.root = this.buildTree(values);
     }
 }
 
@@ -302,16 +309,23 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
     }
 }
 
+/**
+ * Takes a Node object and logs node.data to the console
+ * @param {Object} node 
+ */
 function logValue(node) {
     console.log(node.data)
 }
+
+/*
+ * TESTING:
+ */
 
 let array = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324, 40, 55, 88, 77, 121, 574, 86, 165, 123, 744, 753];
 
 let myTree = new Tree(array);
 
 prettyPrint(myTree.root);
-
 console.log(myTree.isBalanced());
 
 // Imbalance the tree
@@ -321,5 +335,10 @@ myTree.insert(321);
 myTree.insert(320);
 
 prettyPrint(myTree.root);
+console.log(myTree.isBalanced());
 
+console.log('== REBALANCE ==');
+myTree.rebalance();
+
+prettyPrint(myTree.root);
 console.log(myTree.isBalanced());
