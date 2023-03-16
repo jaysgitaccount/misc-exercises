@@ -242,6 +242,54 @@ class Tree {
         );
     }
 
+    depth (data, root = this.root) {
+        if (root === null) {
+            console.log(`${data} not found.`)
+            return null;
+        };
+
+        if (data === root.data) return 0;
+
+        if (data > root.data) {
+            let result = this.depth(data, root.right);
+            if (result) return result + 1;
+
+            return result;
+        } else if (data < root.data) {
+            let result = this.depth(data, root.left);
+            if (result) return result + 1;
+
+            return result;
+        }
+    }
+
+    depthItr(data, root = this.root) {
+        let count = 0;
+        
+        while (root !== null) {
+            if (data > root.data) {
+                root = root.right;
+                count++;
+            } else if (data < root.data) {
+                root = root.left;
+                count++;
+            } else {
+                return count;
+            }
+        }
+
+        // If not found, the while loop exits
+        console.log(`${data} not found.`)
+        return null;
+    }
+
+    isBalanced() {
+        let leftHeight = this.height(this.root.left);
+        let rightHeight = this.height(this.root.right);
+
+        if (Math.abs(leftHeight - rightHeight) <= 1) return true;
+        return false;
+    }
 }
 
 const prettyPrint = (node, prefix = '', isLeft = true) => {
@@ -262,6 +310,16 @@ let array = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324, 40, 55, 88, 77, 12
 
 let myTree = new Tree(array);
 
-console.log(myTree.height());
+prettyPrint(myTree.root);
+
+console.log(myTree.isBalanced());
+
+// Imbalance the tree
+myTree.insert(323);
+myTree.insert(322);
+myTree.insert(321);
+myTree.insert(320);
 
 prettyPrint(myTree.root);
+
+console.log(myTree.isBalanced());
