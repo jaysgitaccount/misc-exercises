@@ -326,7 +326,18 @@ let array = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324, 40, 55, 88, 77, 12
 let myTree = new Tree(array);
 
 prettyPrint(myTree.root);
-console.log(myTree.isBalanced());
+console.log('isBalanced: ' + myTree.isBalanced());
+
+// Print out elements in level, pre, post and inorder
+console.log('== PRINT ==');
+console.log('level:');
+console.log(myTree.levelOrderRec())
+console.log('preorder:');
+console.log(myTree.preorder())
+console.log('postorder:');
+console.log(myTree.postorder())
+console.log('inorder:');
+console.log(myTree.inorder())
 
 // Imbalance the tree
 myTree.insert(323);
@@ -335,10 +346,21 @@ myTree.insert(321);
 myTree.insert(320);
 
 prettyPrint(myTree.root);
-console.log(myTree.isBalanced());
+console.log('isBalanced: ' + myTree.isBalanced());
 
 console.log('== REBALANCE ==');
 myTree.rebalance();
 
 prettyPrint(myTree.root);
-console.log(myTree.isBalanced());
+console.log('isBalanced: ' + myTree.isBalanced());
+
+// Print out elements in level, pre, post and inorder
+console.log('== PRINT ==');
+console.log('level:');
+console.log(myTree.levelOrderRec())
+console.log('preorder:');
+console.log(myTree.preorder())
+console.log('postorder:');
+console.log(myTree.postorder())
+console.log('inorder:');
+console.log(myTree.inorder())
