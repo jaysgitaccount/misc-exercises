@@ -37,7 +37,6 @@ function pauseTimer() {
     storedTime = runningTime;
     
     disableStartButton(false);
-
 }
 
 function resetTimer() {
